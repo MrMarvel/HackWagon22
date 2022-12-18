@@ -21,7 +21,8 @@ def audio_to_table(request: WSGIRequest) -> HttpResponse:
                 audio_bytes = audio_bytes[0]
             if audio_bytes is None:
                 return HttpResponse("No audio file in request body", status=400)
-            audio_bytes = audio_bytes.read()
+            if type(audio_bytes) not in [bytes, str]:
+                audio_bytes = audio_bytes.read()
             # save audio_bytes to file "tmp/input.wav"
             if encoding == "base64":
                 audio_bytes = base64.b64decode(audio_bytes)
@@ -30,7 +31,7 @@ def audio_to_table(request: WSGIRequest) -> HttpResponse:
             with open("tmp/input.wav", "wb") as file:
                 file.write(audio_bytes)
             # convert audio file to table
-            result_table = text2table.main("tmp/input.wav")
+            # result_table = text2table.main("tmp/input.wav")
             # read file "test_ouput.csv" and put it to variable "result_table" encoded by base64
             with open("tests_input/test_output.csv", "rb") as file:
                 file_str = bytes(file.read())
@@ -44,5 +45,5 @@ def audio_to_table(request: WSGIRequest) -> HttpResponse:
             return HttpResponse("Bad request", status=400)
     except Exception as e:
         # Return unknown error
-        raise e
+        print("Error: ", e)
         return HttpResponse(f"Unknown error. Exception: {str(e)}", status=500)

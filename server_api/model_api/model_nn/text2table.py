@@ -249,7 +249,7 @@ def dataframe(large_mas):
     df.set_index(['наименование'], inplace=True)
     df = df.replace('-', '', regex=True)
     new_df = df.reindex(columns=['номер', 'год', 'завод', 'комментарий'])
-    new_df['комментарий'] = new_df['комментарий'].str.replace('без,', 'без')
+    new_df['комментарий'] = new_df['комментарий'].replace('без,', 'без')
     new_df['комментарий'] = new_df.комментарий.replace(to_replace='без букса', value='без буксы')
     new_df['комментарий'] = new_df.комментарий.replace(to_replace='гайка, букса', value='гайка, без буксы')
     new_df['комментарий'] = new_df.комментарий.replace(to_replace='гайка, без букса', value='гайка, без буксы')
@@ -558,9 +558,9 @@ def fix_command(text):
     return result
 
 def main(filename):
-    #get_text(filename) #раскомментить надо
+    get_text(filename) #раскомментить надо
     mas_text = format_text("data.txt")
 
 #filename = 'здесь название файла должно быть'
 #main(filename)
-mas_text = format_text("data.txt")
+# mas_text = format_text("data.txt")

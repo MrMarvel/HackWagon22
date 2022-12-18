@@ -3,7 +3,12 @@ from unittest import TestCase
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-
+from vosk import Model, KaldiRecognizer, SetLogLevel
+from pydub import AudioSegment
+import subprocess
+import json
+import os
+import ffmpeg
 
 # Create your tests here.
 class Test(TestCase):

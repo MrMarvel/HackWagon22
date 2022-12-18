@@ -25,6 +25,6 @@ def audio_to_table(request: WSGIRequest) -> HttpResponse:
                 return HttpResponse(result_table, content_type="text/csv")
         else:
             return HttpResponse("Bad request", status=400)
-    except Exception as _:
+    except Exception as e:
         # Return unknown error
-        return HttpResponse("Unknown error", status=500)
+        return HttpResponse(f"Unknown error. Exception: {str(e)}", status=500)
